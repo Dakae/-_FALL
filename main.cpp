@@ -7,6 +7,6 @@
 int main()
 {
 	Framework& f = Framework::GetInstance();
-	f.Run(new GamePlayScene(),L"fall", 600, 800, false);
+	f.Run(new GamePlayScene(), L"fall", 600, 800, false);
 	return 0;
 }

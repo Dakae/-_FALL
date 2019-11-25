@@ -1,22 +1,25 @@
 #include "stdafx.h"
 #include "Player.h"
 #include <cstdlib>
-#include <cstdlib>
 #include <ctime>
 #include "InputManager.h"
 #include "GameEndScene.h"
+#include "DataManager.h"
 
+#define PI 3.141592f
 
-Player::Player(const wchar_t* path, BarManager* bm) :GameObject(path), bm(bm), col(*transform, Vector2(60, 80))
+Player::Player(const wchar_t* path, BarManager* bm) :GameObject(path), bm(bm), col(*transform, Vector2(50, 70))
 {
 	transform->SetPosition(300.0f, 300.0f);
 	moveSpeed = 10.0f;
 	gameSpeed = 5.0f;
+	oldgameSpeed = 5.0f;
 	timer = 0.0f;
 	delay = 2.0f;
-	score = 0;
+
 
 	srand((unsigned int)time(NULL));
+
 }
 
 void Player::Update()
@@ -49,8 +52,8 @@ void Player::Update()
 	{
 		backgound2->transform->position.y = 1200;
 	}
-	backgound1->transform->position.y -= gameSpeed;
-	backgound2->transform->position.y -= gameSpeed;
+	backgound1->transform->position.y -= oldgameSpeed;
+	backgound2->transform->position.y -= oldgameSpeed;
 
 
 
@@ -58,7 +61,8 @@ void Player::Update()
 	{
 		MakeBar();
 		timer = 0;
-		score++;
+		ScoreCount();
+		DifficultyUpdate();
 	}
 	timer += TimeManager::GetDeltaTime();
 }
@@ -73,16 +77,38 @@ void Player::LateUpdate()
 			//bm->Destroy(i);
 			printf("¾Æ¾ß%d\n", count++);
 			Sleep(1000);
+			DataManager::score = *score;
 			Scene::ChangeScene(new GameEndScene());
 		}
 	}
+	oldgameSpeed = gameSpeed;
 }
 
 void Player::MakeBar()
 {
-	float x = rand() % 280 -140;//
-	Bar* bar1 = bm->PushBackBar(new Bar(L"resources/enemy/bar.png", 300.0f, 0.0f, 0.75f, 0.00f));
-	Bar* bar2 = bm->PushBackBar(new Bar(L"resources/enemy/bar.png", 300.0f, 0.0f, 0.75f, 0.00f));
+	float x = (rand() % 280 -140)*1.0f;//
+	Bar* bar1 = bm->PushBackBar(new Bar(L"resources/enemy/bar.png", gameSpeed*60.0f, 0.0f, 0.75f, 0.00f));
+	Bar* bar2 = bm->PushBackBar(new Bar(L"resources/enemy/bar.png", gameSpeed*60.0f, 0.0f, 0.75f, 0.00f));
 	bar1->transform->SetPosition(x, 900.0f);
 	bar2->transform->SetPosition(x+440+160, 900.0f);
+}
+
+void Player::ScoreCount() {
+	*score += 1;
+	_itow_s(*score,str,100,10);
+	font_score->fontRenderer->text = str;
+}
+
+void Player::DifficultyUpdate()
+{
+	if (*score%11==10)
+	{
+		gameSpeed *= 1.5f;
+
+		delay *= 0.8f;
+	}
+	for (auto& i : bm->barlist)
+	{
+		i->speed = gameSpeed * 60.0f;
+	}
 }

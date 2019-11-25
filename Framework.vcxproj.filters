@@ -123,6 +123,7 @@
     <ClCompile Include="Score.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="DataManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinApp.h">
@@ -221,6 +222,7 @@
     <ClInclude Include="Score.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="DataManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Math.inl">

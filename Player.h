@@ -3,13 +3,16 @@
 #include "AABBCollider.h"
 #include "BarManager.h"
 #include "TimeManager.h"
+#include "Score.h"
 class Player :
 	public GameObject
 {
 public:
 	float moveSpeed;
 	float gameSpeed;
-	int score;
+	float oldgameSpeed;
+	int *score;
+	wchar_t str[100];
 
 	AABBCollider col;	//충돌
 
@@ -17,6 +20,8 @@ public:
 
 	GameObject *backgound1;
 	GameObject *backgound2;
+
+	Score *font_score;
 
 	float timer;
 	float delay;
@@ -26,5 +31,7 @@ public:
 	virtual void LateUpdate();	//LateUpdate: 매 프레임 Update, Render가 실행된 이후 호출됩니다.
 
 	void MakeBar();
+	void ScoreCount();
+	void DifficultyUpdate();
 };
 

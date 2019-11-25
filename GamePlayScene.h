@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Player.h"
-#include "Bar.h"
+#include "Score.h"
 class GamePlayScene :
 	public Scene
 {
@@ -11,5 +11,7 @@ public:
 
 	virtual void Initialize();
 	Player* player;
+
+	Score* font_score;
 };
 
