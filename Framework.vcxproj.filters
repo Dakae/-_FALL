@@ -124,6 +124,7 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinApp.h">
@@ -223,6 +224,7 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="DataManager.h" />
+    <ClInclude Include="Button.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Math.inl">

@@ -25,11 +25,13 @@ public:
 
 	float timer;
 	float delay;
+	bool backfront;
 
 	Player(const wchar_t* path,BarManager* bm);					//Player생성자
 	virtual void Update();		//Update: 매 프레임 호출됩니다.
 	virtual void LateUpdate();	//LateUpdate: 매 프레임 Update, Render가 실행된 이후 호출됩니다.
 
+	void BackGroundMove();
 	void MakeBar();
 	void ScoreCount();
 	void DifficultyUpdate();

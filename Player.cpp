@@ -16,7 +16,7 @@ Player::Player(const wchar_t* path, BarManager* bm) :GameObject(path), bm(bm), c
 	oldgameSpeed = 5.0f;
 	timer = 0.0f;
 	delay = 2.0f;
-
+	backfront = true;
 
 	srand((unsigned int)time(NULL));
 
@@ -43,18 +43,8 @@ void Player::Update()
 	if (transform->position.y > 760) transform->position.y = 760;
 
 
-	//속력 만들면 400-속력 으로 변경 ===> 해결
-	if (backgound1->transform->position.y < -400 + gameSpeed)
-	{
-		backgound1->transform->position.y = 1200;
-	}
-	if (backgound2->transform->position.y < -400 + gameSpeed)
-	{
-		backgound2->transform->position.y = 1200;
-	}
-	backgound1->transform->position.y -= oldgameSpeed;
-	backgound2->transform->position.y -= oldgameSpeed;
-
+	
+	BackGroundMove();
 
 
 	if (timer>delay)
@@ -84,6 +74,44 @@ void Player::LateUpdate()
 	oldgameSpeed = gameSpeed;
 }
 
+void Player::BackGroundMove()
+{
+	//초기버전 배경움직임
+	/*//속력 만들면 400-속력 으로 변경 ===> 해결
+	if (backgound1->transform->position.y < -400 + gameSpeed)
+	{
+		backgound1->transform->position.y = 1200;
+	}
+	if (backgound2->transform->position.y < -400 + gameSpeed)
+	{
+		backgound2->transform->position.y = 1200;
+	}
+	backgound1->transform->position.y -= oldgameSpeed;
+	backgound2->transform->position.y -= oldgameSpeed;*/
+
+	//2차버전 배경움직임
+	if (backfront)
+	{
+		backgound1->transform->position.y -= gameSpeed;
+		backgound2->transform->position.y = backgound1->transform->position.y + 800;
+		if (backgound1->transform->position.y < -400 + gameSpeed)
+		{
+			backgound1->transform->position.y = 1200;
+			backfront = false;
+		}
+	}
+	if (!backfront)
+	{
+		backgound2->transform->position.y -= gameSpeed;
+		backgound1->transform->position.y = backgound2->transform->position.y + 800;
+		if (backgound2->transform->position.y < -400 + gameSpeed)
+		{
+			backgound2->transform->position.y = 1200;
+			backfront = true;
+		}
+	}
+}
+
 void Player::MakeBar()
 {
 	float x = (rand() % 280 -140)*1.0f;//
@@ -111,4 +139,11 @@ void Player::DifficultyUpdate()
 	{
 		i->speed = gameSpeed * 60.0f;
 	}
+
+	/*if (*score % 5 == 4)
+	{
+		gameSpeed *= 1.2f;
+
+		delay *= 0.8f;
+	}*/
 }

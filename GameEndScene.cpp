@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "GameEndScene.h"
 #include "DataManager.h"
+#include "Button.h"
 #include <cstdlib>
-
-#include "GameStartScene.h"
 
 
 GameEndScene::GameEndScene()
@@ -19,4 +18,6 @@ void GameEndScene::Initialize()
 	score = (Score*)PushBackGameObject(new Score());
 	score->transform->SetPosition(300.0f, 300.0f);
 	score->fontRenderer->text = str;
+
+	PushBackGameObject(new Button(L"", 'R'));
 }
